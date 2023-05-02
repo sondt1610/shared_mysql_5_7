@@ -1,5 +1,9 @@
 version: "3.3"
 
+volumes:
+  mysql_5_7_data:
+    name: mysql_5_7_data
+
 services:
   mysql_5_7_service:
     privileged: true

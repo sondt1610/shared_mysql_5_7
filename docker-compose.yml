@@ -1,0 +1,35 @@
+version: "3.3"
+
+services:
+  mysql_5_7_service:
+    privileged: true
+    container_name: mysql_5_7
+    image: mysql:5.7
+    platform: linux/amd64
+    restart: always
+    volumes:
+      - mysql_5_7_data:/var/lib/mysql
+      - ./docker/mysql/init:/docker-entrypoint-initdb.d
+      - ./:/var/www
+      - ./docker/mysql/my.cnf:/etc/mysql/my.cnf
+
+    ports:
+      - "3310:3306"
+    networks:
+      - app_network
+    environment:
+      MYSQL_USER: homestead
+      MYSQL_PASSWORD: secret
+      MYSQL_ROOT_PASSWORD: root
+  
+  # adminer:
+  #   image: adminer:latest
+  #   restart: always
+  #   networks:
+  #     - auction_sample_net
+  #   ports:
+  #     - "8081:8080"
+
+networks:
+  app_network:
+    external: true
